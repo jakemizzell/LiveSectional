@@ -21,5 +21,4 @@ The files (you can see their contents by typing `nano FILENAME`)
 * rainbow.py – this makes the lights animate
 * startup.py – I wrote this to manage the order when things are ran. It checks the time and then turns the lights on or off depending on the time.
 
-startup.py is run every 15 minutes by the crontab. To adjust how often it is run or anything in crontab run `sudo crontab -e`
-
+startup.py is run every 15 minutes by the crontab. To adjust how often it is run `sudo crontab -e`
