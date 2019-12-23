@@ -5,6 +5,7 @@ I got this project idea from [This blog](http://www.iflymn.com/2019/07/livesecti
 
 Login
 Username: pi 
+
 Password: livesectional
 
 To change the Wifi information you have to type `sudo raspi-config` and then mess with he network options
