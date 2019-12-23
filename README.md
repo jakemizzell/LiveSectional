@@ -3,8 +3,8 @@
 This is a Repo I adapted from [This Repo](https://github.com/JJSilva/NeoSectional) to create  a Live sectional.
 I got this project idea from [This blog](http://www.iflymn.com/2019/07/livesectional/).
 
-Login\n
-Username: pi \n
+Login  
+Username: pi  
 Password: livesectional
 
 To change the Wifi information you have to type `sudo raspi-config` and then mess with he network options
