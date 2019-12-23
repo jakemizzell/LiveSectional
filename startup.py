@@ -11,7 +11,7 @@ import time
 hour = datetime.datetime.now().hour - time.localtime().tm_isdst
 
 #This script should run 9am-5pm Central Time year round if my logic is right
-if hour <= 15 or hour >= 23:
+if hour >= 15 and hour <= 22:
 	subprocess.Popen(['python','/LiveSectional/rainbow.py']).wait()
 
 	file = open("/LiveSectional/log.txt","a")
