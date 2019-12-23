@@ -7,7 +7,7 @@ Login
 Username: pi  
 Password: livesectional
 
-To change the Wifi information you have to type `sudo raspi-config` and then mess with he network options
+To change the Wifi information you have to type `sudo raspi-config` and then mess with the network options
 
 Everything lives in a folder called LiveSectional (In the link above he always references it as “NeoSectional”, I renamed the folder and possibly other files)
 
