@@ -15,7 +15,6 @@ LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and colour ordering
 
 
 def wheel(pos):
-	"""Generate rainbow colors across 0-255 positions."""
 	if pos < 85:
 		return Color(pos * 3, 255 - pos * 3, 0)
 	elif pos < 170:
@@ -26,7 +25,6 @@ def wheel(pos):
 		return Color(0, pos * 3, 255 - pos * 3)
 
 def rainbowCycle(strip, wait_ms=50, iterations=1):
-	"""Draw rainbow that uniformly distributes itself across all pixels."""
 	for j in range(256*iterations):
 		for i in range(strip.numPixels()):
 			strip.setPixelColor(i, wheel((int(i * 256 / strip.numPixels()) + j) & 255))
@@ -39,3 +37,4 @@ strip.begin()
 
 print ("Rainbow animations!")
 rainbowCycle(strip)
+quit()

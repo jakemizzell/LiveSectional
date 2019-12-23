@@ -6,6 +6,7 @@ from neopixel import *
 import sys
 import os
 import time
+import subprocess
 from neopixel import *
 
 
@@ -23,8 +24,6 @@ LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and colour ordering
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS, LED_CHANNEL, LED_STRIP)
 
 strip.begin()
-
-import rainbow
 
 with open("/LiveSectional/airports") as f:
     airports = f.readlines()
@@ -45,6 +44,8 @@ for airportcode in airports:
 content = urllib2.urlopen(url).read()
 root = ET.fromstring(content)
 
+print("Information downloaded")
+
 for metar in root.iter('METAR'):
         if airportcode == "NULL":
                 continue
@@ -60,14 +61,13 @@ print("\n\nUpdating the lights")
 i = 0
 for airportcode in airports:
         if airportcode == "NULL":
-                i += 1
+                i = i + 1
         	continue
+
  	color = Color(0,0,0)
 
         flightCateory = mydict.get(airportcode,"No")
-
         if  flightCateory != "No":
-
                 if flightCateory == "VFR":
                         color = Color(255,0,0)
                 elif flightCateory == "MVFR":
@@ -79,13 +79,11 @@ for airportcode in airports:
         else:
                 color = Color(8,8,8)
                 print(airportcode + " N/A")
-
-
         print("Setting light " + str(i) + " for " + airportcode + " " + flightCateory + " " + str(color))
-        strip.setPixelColor(i, color)
+	strip.setPixelColor(i, color)
         strip.show()
 
-        i += 1
+        i = i + 1
 
 #Uncomment out the following lines to create a Map Legend be sure to also change the numbers to coorispond with your LED light positions.
 
