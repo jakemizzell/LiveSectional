@@ -6,6 +6,11 @@ from neopixel import *
 import sys
 import os
 
+#setup for IC238 Light Sensor for LED Dimming, does not need to be commented out if sensor is not used
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(4,GPIO.IN)
+
 
 # LED strip configuration:
 LED_COUNT      = 100      # Number of LED pixels.
