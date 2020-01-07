@@ -224,17 +224,6 @@ while (hour >= 15 and hour <= 22):
                             blink = color #Turn on LED
                             strip.setPixelColor(i, blink)
 
-                if legend_hiwinds: #Check to see if Legend is being used
-                    if toggle == 0:
-                        blink = color_black #Turn off LED
-                        strip.setPixelColor(legend_hiwinds_pin, blink)
-                    else:
-                        blink = color_mvfr #Turn on LED Blue
-                        strip.setPixelColor(legend_hiwinds_pin, blink)
-                else:
-                    strip.setPixelColor(legend_hiwinds_pin, color_black)
-
-
             #Check to see if wxstring shows a thunderstorm. Flash LED White randomly if so
             if lghtnflash: #Check user setting to determine if the map should lightning flash for severe weather or not
                 wxstring = mydicttsra.get(airportcode,"No")
