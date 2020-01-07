@@ -3,6 +3,13 @@
 This is a Repo I adapted from https://github.com/JJSilva/NeoSectional to create  a Live sectional.
 I got this project idea from http://www.iflymn.com/2019/07/livesectional/.
 
+White Lights = Issue with the weather station
+Green Lights = VFR
+Blue Lights = MVFR
+Red Lights = IFR
+Purple Lights = LIFR
+Flashing Lights = Winds > 15kts
+
 Login  
 Username: pi  
 Password: livesectional
