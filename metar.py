@@ -83,7 +83,7 @@ while (hour >= 9 and hour <= 17):
     for number in range(LED_COUNT):
         color = color_black
         strip.setPixelColor(LED_COUNT,color)
-        trip.show()
+        strip.show()
     
     print ("Updating FAA Weather Data") #Debug
 
