@@ -5,6 +5,9 @@ import time
 from neopixel import *
 import sys
 import os
+import subprocess
+import datetime
+import time
 
 #setup for IC238 Light Sensor for LED Dimming, does not need to be commented out if sensor is not used
 import RPi.GPIO as GPIO
@@ -39,19 +42,11 @@ color_nowx = Color(200,200,200) #Slightly dimmed white
 color_black = Color(0,0,0)  #Black/Off
 color_yellow = Color(255,255,0) #Full bright Yellow (used for legend on lightning/thunderstorms)
 
-legend = 1              #1 = Yes, 0 = No. Use defined pins to set up a legend using LEDs. Pay notice to legend_hiwinds and legend_lghtn in relation to Legend.
-legend_hiwinds = 0  #1 = Yes, 0 = No. the legend can display just the flight categories, or high winds as well
-legend_lghtn = 0    #1 = Yes, 0 = No. the legend can display just the flight categories, or Lightning/Thunderstorm as well
-legend_pin_vfr = 70 #Set LED pin number for VFR Legend LED
-legend_pin_mvfr = 69    #Set LED pin number for MVFR Legend LED
-legend_pin_ifr = 68 #Set LED pin number for IFR Legend LED
-legend_pin_lifr = 67    #Set LED pin number for LIFR Legend LED
-legend_pin_nowx = 66    #Set LED pin number for No Weather Legend LED
-legend_hiwinds_pin = 71 #Set LED pin number for High Winds Legend LED
-legend_lghtn_pin = 72   #Set LED pin number for Thunderstorms Legend LED
-
 hiwindblink = 1     #1 = Yes, 0 = No. Blink the LED for high wind Airports.
 lghtnflash = 1      #1 = Yes, 0 = No. Flash the LED for an airport reporting severe weather like TSRA.
+
+dimmed_value = 10
+birght_value = 10
 
             #list of METAR weather categories to designate severe weather in area.
             #See https://www.aviationweather.gov/metar/symbol for descriptions. Add or subtract as necessary.
@@ -82,8 +77,9 @@ def rainbowCycle(strip, iterations, wait_ms=2):
                 strip.show()
 
 #Start of infintite loop that first updates data from FAA. Then cycles through the LED's to set colors and blinks as necessary
-infinite = 1 #Set variable for infinite loop. It doesn't get changed
-while (infinite):
+hour = datetime.datetime.now().hour - time.localtime().tm_isdst
+
+while (hour >= 15 and hour <= 22):
     rainbowCycle(strip, iterations)
     print ("Updating FAA Weather Data") #Debug
 
@@ -163,25 +159,6 @@ while (infinite):
         else:
             mydicttsra[stationId] = wxstring #build thunderstorm dictionary
 
-
-    #Build Legend
-    #Be sure to put a "LGND" at each legend pin position in the ./NeoSectional/airports file
-    #The legend can be disabled in settings. It can be turned on showing only the 5 weather categories, VFR, MVFR, IFR, LIFR, No WX.
-    #Or you can add High Winds which will blink the LED, and/or add Lightning/Thunderstorms which will simulate lightning.
-    if legend:
-        #VFR LED - Green
-        strip.setPixelColor(legend_pin_vfr, color_vfr)
-        #MVFR - Blue
-        strip.setPixelColor(legend_pin_mvfr, color_mvfr)
-        #IFR - Red
-        strip.setPixelColor(legend_pin_ifr, color_ifr)
-        #LIFR - Magenta
-        strip.setPixelColor(legend_pin_lifr, color_lifr)
-        #No Weather Reported - White
-        strip.setPixelColor(legend_pin_nowx, color_nowx)
-
-        strip.show()
-
     #Setup timed loop that will run based on the value of update_interval which is a user setting
     timeout_start = time.time()
     while time.time() < timeout_start + (update_interval * 60): #take update interval which is in mins and turn into seconds
@@ -191,9 +168,9 @@ while (infinite):
 
         #Bright light will provide a low input (0). Dark light will provide a high input (1). Full brightness used if no light sensor installed
         if GPIO.input(4) == 1:
-                LED_BRIGHTNESS = 10
+                LED_BRIGHTNESS = dimmed_value
         else:
-                LED_BRIGHTNESS = 10
+                LED_BRIGHTNESS = birght_value
         strip.setBrightness(LED_BRIGHTNESS)
 
         #start main loop to determine which airports should blink
@@ -287,21 +264,11 @@ while (infinite):
 
             i = i + 1 #increment to next airport
 
-        #If legend is used and thunderstorms are on
-        if legend_lghtn:
-            #quickly flash bright yellow to represent lightning
-            strip.setPixelColor(legend_lghtn_pin, color_yellow)
-            strip.show()
-            time.sleep(lghtnon)
-            strip.setPixelColor(legend_lghtn_pin, color_ifr)
-            strip.show()
-            time.sleep(lghtnoff)
-            strip.setPixelColor(legend_lghtn_pin, color_yellow)
-            strip.show()
-            time.sleep(lghtnon)
-            strip.setPixelColor(legend_lghtn_pin, color_ifr)
-            strip.show()
-        else:
-            strip.setPixelColor(legend_lghtn_pin, color_black)
-
         strip.show()
+
+#if it's outside of the defined time
+print("Killing the lights")
+for number in range(LED_COUNT):
+    color = Color(128,128,128)
+    strip.setPixelColor(LED_COUNT,color)
+    strip.show()
