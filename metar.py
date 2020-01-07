@@ -188,11 +188,12 @@ while (infinite):
 
         toggle = not(toggle) #used to determine if LED should be on or off
 
+
         #Bright light will provide a low input (0). Dark light will provide a high input (1). Full brightness used if no light sensor installed
         if GPIO.input(4) == 1:
-                LED_BRIGHTNESS = dimmed_value
+                LED_BRIGHTNESS = 10
         else:
-                LED_BRIGHTNESS = bright_value
+                LED_BRIGHTNESS = 10
         strip.setBrightness(LED_BRIGHTNESS)
 
         #start main loop to determine which airports should blink
