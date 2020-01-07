@@ -10,7 +10,7 @@ Light Color Code:
 * Red = IFR
 * Purple = LIFR
 * Flashing = Winds > 15kts
-* = Thunderstorms in Vicinity
+* Flashing Yellow = Thunderstorms in Vicinity
 
 Login  
 Username: pi  
