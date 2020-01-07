@@ -246,7 +246,7 @@ while (hour >= 15 and hour <= 22):
                         strip.setPixelColor(i, color)
                         strip.show()
 
-                    else:
+                    #else:
                         #print ("NO WEATHER " + wxstring) #Debug
 
                 #print #Debug
