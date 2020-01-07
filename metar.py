@@ -183,16 +183,14 @@ while (hour >= 9 and hour <= 17):
 
             flightCateory = mydict.get(airportcode,"No")
 
-            if  flightCateory != "No":
-                if flightCateory == "VFR":
-                    color = color_vfr
-                elif flightCateory == "MVFR":
-                    color = color_mvfr
-                elif flightCateory == "IFR":
-                    color = color_ifr
-                elif flightCateory == "LIFR":
-                    color = color_lifr
-
+            if flightCateory == "VFR":
+                color = color_vfr
+            elif flightCateory == "MVFR":
+                color = color_mvfr
+            elif flightCateory == "IFR":
+                color = color_ifr
+            elif flightCateory == "LIFR":
+                color = color_lifr
             else:
                 color = color_nowx
 
@@ -238,6 +236,6 @@ while (hour >= 9 and hour <= 17):
 #if it's outside of the defined time
 print("Killing the lights")
 for number in range(LED_COUNT):
-    color = Color(128,128,128)
+    color = color_black
     strip.setPixelColor(LED_COUNT,color)
     strip.show()
