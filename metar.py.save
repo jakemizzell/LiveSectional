@@ -5,7 +5,9 @@ import time
 from neopixel import *
 import sys
 import os
+import subprocess
 import datetime
+import time
 
 #setup for IC238 Light Sensor for LED Dimming, does not need to be commented out if sensor is not used
 import RPi.GPIO as GPIO
@@ -24,7 +26,7 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 LED_STRIP      = ws.WS2811_STRIP_GRB   # Strip type and colour ordering
 
 #User defined items to be set
-max_wind_speed = 15      #Any speed above will flash the LED for the appropriate airport
+max_wind_speed = 13      #Any speed above will flash the LED for the appropriate airport
 toggle = 0      #initialize blink toggle. 0 will start the lights in the ON position. 1 will start with lights OFF.
 blink_pause = .8    #Determines how quickly the LED's blink if winds are more than max_wind_speed in seconds
 lghtnon = .08       #Lightning on interval in seconds
@@ -75,8 +77,9 @@ def rainbowCycle(strip, iterations, wait_ms=2):
                 strip.show()
 
 #Start of infintite loop that first updates data from FAA. Then cycles through the LED's to set colors and blinks as necessary
-hour = datetime.datetime.now().hour
-while (hour >= 9 and hour <= 17):
+hour = datetime.datetime.now().hour - time.localtime().tm_isdst
+
+while (hour >= 15 and hour <= 22):
     rainbowCycle(strip, iterations)
     print ("Updating FAA Weather Data") #Debug
 
@@ -170,18 +173,26 @@ while (hour >= 9 and hour <= 17):
 
         #start main loop to determine which airports should blink
         i = 0
+        
+
         for airportcode in airports:
+            £print ('airport LED number = ' + str(i)) #Debug
             if airportcode == "NULL": #retrieve the color that the LED has been assigned so we can save it for restoring if the LED will be Blinking
+                print ("NULL") #Debug
+                print #Debug
                 color = color_black
                 strip.setPixelColor(i, color)
                 i = i + 1
                 continue
 
             elif airportcode == "LGND":
+                print ("LGND") #Debug
+                print
                 i = i +1
                 continue
 
             flightCateory = mydict.get(airportcode,"No")
+            print (airportcode + " is " + flightCateory) #Debug
 
             if  flightCateory != "No":
                 if flightCateory == "VFR":
@@ -201,6 +212,7 @@ while (hour >= 9 and hour <= 17):
             #Check the windspeed to determine if the LED should blink
             if hiwindblink: #Check user setting to determine if the map should blink for high winds or not
                 windspeedkt = mydictwinds.get(airportcode,"No")
+                print (airportcode + " winds = " + windspeedkt) #Debug
 
                 if windspeedkt != "No":
                     if int(windspeedkt) > max_wind_speed:
@@ -214,10 +226,12 @@ while (hour >= 9 and hour <= 17):
             #Check to see if wxstring shows a thunderstorm. Flash LED White randomly if so
             if lghtnflash: #Check user setting to determine if the map should lightning flash for severe weather or not
                 wxstring = mydicttsra.get(airportcode,"No")
+                print (" WX = " + wxstring) #Debug
 
                 if wxstring <> "NONE" or "NO" or "No":
 
                     if wxstring in wx_lghtn_ck:
+                        print ("YES WEATHER " + wxstring) #Debug
                         #quickly flash bright yellow to represent lightning
                         strip.setPixelColor(i, color_yellow)
                         strip.show()
@@ -230,6 +244,11 @@ while (hour >= 9 and hour <= 17):
                         time.sleep(lghtnon)
                         strip.setPixelColor(i, color)
                         strip.show()
+
+                    else:
+                        print ("NO WEATHER " + wxstring) #Debug
+
+                print #Debug
 
             i = i + 1 #increment to next airport
 
