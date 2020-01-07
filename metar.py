@@ -117,15 +117,15 @@ while (infinite):
 
     #grab the airport category, wind speed and TSRA from the results given from FAA.
     for metar in root.iter('METAR'):
-            if airportcode == "NULL": #if airport code is NULL, then bypass
-                    continue
-            stationId = metar.find('station_id').text
+        if airportcode == "NULL": #if airport code is NULL, then bypass
+            continue
+        stationId = metar.find('station_id').text
 
         #grab flight category from returned FAA data
-            if metar.find('flight_category') is None: #if category is blank, then bypass
-                    print ("Skipping")
-                    continue
-            flightCateory = metar.find('flight_category').text
+        if metar.find('flight_category') is None: #if category is blank, then bypass
+            print ("Skipping")
+            continue
+        flightCateory = metar.find('flight_category').text
 
         #grab wind speeds from returned FAA data
         if metar.find('wind_speed_kt') is None: #if wind speed is blank, then bypass
@@ -134,29 +134,29 @@ while (infinite):
         windspeedkt = metar.find('wind_speed_kt').text
 
         #grab Thunderstorm info from returned FAA data
-            if metar.find('wx_string') is None: #if weather string is blank, then bypass
-                    wxstring = "NONE"
+        if metar.find('wx_string') is None: #if weather string is blank, then bypass
+            wxstring = "NONE"
         else:
-                wxstring = metar.find('wx_string').text
+            wxstring = metar.find('wx_string').text
 
-            print stationId + " " + flightCateory + " " + windspeedkt + " " + wxstring #Debug
+        print stationId + " " + flightCateory + " " + windspeedkt + " " + wxstring #Debug
 
 
         #Check for duplicate airport identifier and skip if found, otherwise store in dictionary
-            if stationId in mydict:
-                    print ("Duplicate, only saved first metar category")
-            else:
-                    mydict[stationId] = flightCateory #build category dictionary
+        if stationId in mydict:
+            print ("Duplicate, only saved first metar category")
+        else:
+            mydict[stationId] = flightCateory #build category dictionary
 
         if stationId in mydictwinds:
             print ("Duplicate, only saved the first winds")
         else:
             mydictwinds[stationId] = windspeedkt #build windspeed dictionary
 
-            if stationId in mydicttsra:
-                    print ("duplicate, only saved the first weather")
-            else:
-                    mydicttsra[stationId] = wxstring #build thunderstorm dictionary
+        if stationId in mydicttsra:
+            print ("duplicate, only saved the first weather")
+        else:
+            mydicttsra[stationId] = wxstring #build thunderstorm dictionary
 
 
     #Build Legend
