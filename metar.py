@@ -83,7 +83,7 @@ while (infinite):
     print ("Updating FAA Weather Data") #Debug
 
     #read airports file
-    with open("/LiveSectinal/airports") as f:
+    with open("/LiveSectional/airports") as f:
             airports = f.readlines()
     airports = [x.strip() for x in airports]
 
