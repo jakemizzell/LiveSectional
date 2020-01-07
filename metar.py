@@ -78,6 +78,13 @@ def rainbowCycle(strip, iterations, wait_ms=2):
 hour = datetime.datetime.now().hour
 while (hour >= 9 and hour <= 17):
     rainbowCycle(strip, iterations)
+
+    #Set all the colors to black
+    for number in range(LED_COUNT):
+        color = color_black
+        strip.setPixelColor(LED_COUNT,color)
+        trip.show()
+    
     print ("Updating FAA Weather Data") #Debug
 
     #read airports file
