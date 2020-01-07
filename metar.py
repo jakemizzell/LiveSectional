@@ -124,13 +124,13 @@ while (hour >= 15 and hour <= 22):
 
         #grab flight category from returned FAA data
         if metar.find('flight_category') is None: #if category is blank, then bypass
-            print ("Skipping")
+            #print ("Skipping")
             continue
         flightCateory = metar.find('flight_category').text
 
         #grab wind speeds from returned FAA data
         if metar.find('wind_speed_kt') is None: #if wind speed is blank, then bypass
-            print ("Skipping")
+            #print ("Skipping")
             continue
         windspeedkt = metar.find('wind_speed_kt').text
 
@@ -176,24 +176,24 @@ while (hour >= 15 and hour <= 22):
         #start main loop to determine which airports should blink
         i = 0
         for airportcode in airports:
-            print ('airport LED number = ' + str(i)) #Debug
+            #print ('airport LED number = ' + str(i)) #Debug
 
             if airportcode == "NULL": #retrieve the color that the LED has been assigned so we can save it for restoring if the LED will be Blinking
-                print ("NULL") #Debug
-                print #Debug
+                #print ("NULL") #Debug
+                #print #Debug
                 color = color_black
                 strip.setPixelColor(i, color)
                 i = i + 1
                 continue
 
             elif airportcode == "LGND":
-                print ("LGND") #Debug
-                print
+                #print ("LGND") #Debug
+                #print
                 i = i +1
                 continue
 
             flightCateory = mydict.get(airportcode,"No")
-            print (airportcode + " is " + flightCateory) #Debug
+            #print (airportcode + " is " + flightCateory) #Debug
 
             if  flightCateory != "No":
                 if flightCateory == "VFR":
@@ -213,7 +213,7 @@ while (hour >= 15 and hour <= 22):
             #Check the windspeed to determine if the LED should blink
             if hiwindblink: #Check user setting to determine if the map should blink for high winds or not
                 windspeedkt = mydictwinds.get(airportcode,"No")
-                print (airportcode + " winds = " + windspeedkt) #Debug
+                #print (airportcode + " winds = " + windspeedkt) #Debug
 
                 if windspeedkt != "No":
                     if int(windspeedkt) > max_wind_speed:
@@ -227,12 +227,12 @@ while (hour >= 15 and hour <= 22):
             #Check to see if wxstring shows a thunderstorm. Flash LED White randomly if so
             if lghtnflash: #Check user setting to determine if the map should lightning flash for severe weather or not
                 wxstring = mydicttsra.get(airportcode,"No")
-                print (" WX = " + wxstring) #Debug
+                #print (" WX = " + wxstring) #Debug
 
                 if wxstring <> "NONE" or "NO" or "No":
 
                     if wxstring in wx_lghtn_ck:
-                        print ("YES WEATHER " + wxstring) #Debug
+                        #print ("YES WEATHER " + wxstring) #Debug
                         #quickly flash bright yellow to represent lightning
                         strip.setPixelColor(i, color_yellow)
                         strip.show()
@@ -247,9 +247,9 @@ while (hour >= 15 and hour <= 22):
                         strip.show()
 
                     else:
-                        print ("NO WEATHER " + wxstring) #Debug
+                        #print ("NO WEATHER " + wxstring) #Debug
 
-                print #Debug
+                #print #Debug
 
             i = i + 1 #increment to next airport
 
