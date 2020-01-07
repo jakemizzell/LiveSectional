@@ -269,10 +269,10 @@ while (infinite):
                         strip.show()
                         time.sleep(lghtnoff)
                         strip.setPixelColor(i, color_yellow)
-                                        strip.show()
-                                        time.sleep(lghtnon)
-                                        strip.setPixelColor(i, color)
-                                        strip.show()
+                        strip.show()
+                        time.sleep(lghtnon)
+                        strip.setPixelColor(i, color)
+                        strip.show()
 
                     else:
                         print ("NO WEATHER " + wxstring) #Debug
@@ -283,18 +283,18 @@ while (infinite):
 
         #If legend is used and thunderstorms are on
         if legend_lghtn:
-                        #quickly flash bright yellow to represent lightning
-                        strip.setPixelColor(legend_lghtn_pin, color_yellow)
-                        strip.show()
-                        time.sleep(lghtnon)
-                        strip.setPixelColor(legend_lghtn_pin, color_ifr)
-                        strip.show()
-                        time.sleep(lghtnoff)
-                        strip.setPixelColor(legend_lghtn_pin, color_yellow)
-                        strip.show()
-                        time.sleep(lghtnon)
-                        strip.setPixelColor(legend_lghtn_pin, color_ifr)
-                        strip.show()
+            #quickly flash bright yellow to represent lightning
+            strip.setPixelColor(legend_lghtn_pin, color_yellow)
+            strip.show()
+            time.sleep(lghtnon)
+            strip.setPixelColor(legend_lghtn_pin, color_ifr)
+            strip.show()
+            time.sleep(lghtnoff)
+            strip.setPixelColor(legend_lghtn_pin, color_yellow)
+            strip.show()
+            time.sleep(lghtnon)
+            strip.setPixelColor(legend_lghtn_pin, color_ifr)
+            strip.show()
         else:
             strip.setPixelColor(legend_lghtn_pin, color_black)
 
