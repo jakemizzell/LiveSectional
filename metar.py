@@ -243,11 +243,11 @@ while (infinite):
 
                 if legend_hiwinds: #Check to see if Legend is being used
                     if toggle == 0:
-                                                blink = color_black #Turn off LED
-                                                strip.setPixelColor(legend_hiwinds_pin, blink)
-                                        else:
-                                                blink = color_mvfr #Turn on LED Blue
-                                                strip.setPixelColor(legend_hiwinds_pin, blink)
+                        blink = color_black #Turn off LED
+                        strip.setPixelColor(legend_hiwinds_pin, blink)
+                    else:
+                        blink = color_mvfr #Turn on LED Blue
+                        strip.setPixelColor(legend_hiwinds_pin, blink)
                 else:
                     strip.setPixelColor(legend_hiwinds_pin, color_black)
 
